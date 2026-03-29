@@ -1,0 +1,48 @@
+{
+  "name": "Kevin Xu Photography",
+  "location": "Detroit and wherever the light lands next",
+  "tagline": "Portraits, travel, and sports photography presented through three focused category pages and an interactive travel map.",
+  "heroTitle": "Portraits, motion, and far-flung places with room to breathe.",
+  "heroBody": "This portfolio is built to let people slow down with the work. The site is organized around people, travel, and sports, with travel also viewable through a map.",
+  "introShort": [
+    "I am Kevin Xu, a photographer focused on people, travel, and sports, with an eye for atmosphere as much as action.",
+    "I like images that feel lived in, whether they come from a portrait session at golden hour, a long road through another country, or a split second on the sideline."
+  ],
+  "heroStats": [
+    {
+      "label": "Core disciplines",
+      "value": "3",
+      "note": "People, travel, and sports in one file-backed portfolio."
+    },
+    {
+      "label": "Globe-ready sets",
+      "value": "2",
+      "note": "Travel collections with coordinates show up on the interactive map."
+    },
+    {
+      "label": "Editing model",
+      "value": "Files only",
+      "note": "No public admin surface; updates happen directly in the repo."
+    }
+  ],
+  "featuredCollections": [
+    "golden-hour-portraits",
+    "iceland-ring-road",
+    "friday-night-lights"
+  ],
+  "categories": [
+    {
+      "slug": "people",
+      "description": "Portrait work that leans into atmosphere, gesture, and the space around a person."
+    },
+    {
+      "slug": "travel",
+      "description": "Location-based sets that visitors can explore through a dedicated travel page and map view."
+    },
+    {
+      "slug": "sports",
+      "description": "Fast, high-energy frames focused on impact, anticipation, and the edge of action."
+    }
+  ],
+  "footerNote": ""
+}

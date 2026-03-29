@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200">
+  <rect width="1600" height="1200" fill="#0d0d12"/>
+  <rect x="0" y="0" width="380" height="1200" fill="#4a1620"/>
+  <rect x="1220" y="0" width="380" height="1200" fill="#4a1620"/>
+  <rect x="520" y="220" width="520" height="760" rx="240" fill="#1f2026"/>
+  <circle cx="830" cy="310" r="150" fill="#e0d5ba" opacity="0.1"/>
+  <text x="120" y="1080" fill="#ece0c8" font-family="Georgia, serif" font-size="88">Backstage Silhouettes</text>
+</svg>

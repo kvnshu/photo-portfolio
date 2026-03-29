@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200">
+  <defs>
+    <linearGradient id="mist" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#6b7d8a"/>
+      <stop offset="100%" stop-color="#9aacb8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#mist)"/>
+  <path d="M0 600 Q400 550 800 580 T1600 560 L1600 1200 L0 1200 Z" fill="#1c1e1f"/>
+  <path d="M0 700 Q500 720 1000 690 T1600 710 L1600 1200 L0 1200 Z" fill="#0f1112"/>
+  <ellipse cx="1100" cy="450" rx="300" ry="100" fill="#b8c5ce" opacity="0.25"/>
+  <path d="M1400 300 Q1450 400 1420 550" stroke="#4a5658" stroke-width="8" fill="none" opacity="0.4"/>
+  <circle cx="400" cy="900" r="40" fill="#252829"/>
+  <circle cx="550" cy="950" r="25" fill="#1a1c1d"/>
+  <text x="120" y="1080" fill="#d4e0e6" font-family="Georgia, serif" font-size="88">Black Sand Beach</text>
+</svg>

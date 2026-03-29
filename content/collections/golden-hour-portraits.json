@@ -1,0 +1,25 @@
+{
+  "slug": "golden-hour-portraits",
+  "title": "Golden Hour Portraits",
+  "category": "people",
+  "description": "A portrait set built around warm sidewalks, long shadows, and quiet confidence just before sunset.",
+  "coverPhotoId": "portrait-window",
+  "photos": [
+    {
+      "id": "portrait-window",
+      "src": "/photos/people/golden-hour/portrait-window.svg",
+      "title": "Window Light",
+      "alt": "A stylized portrait placeholder of a subject near a bright window at golden hour.",
+      "caption": "Soft side light and a still frame make the gesture carry the image.",
+      "date": "April 2025"
+    },
+    {
+      "id": "portrait-corner",
+      "src": "/photos/people/golden-hour/portrait-corner.svg",
+      "title": "Corner Turn",
+      "alt": "A stylized portrait placeholder of a subject turning at a city corner in warm evening light.",
+      "caption": "A simple step and glance back turns the street into a stage.",
+      "date": "April 2025"
+    }
+  ]
+}

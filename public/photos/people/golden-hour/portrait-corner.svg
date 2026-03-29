@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#171c22"/>
+      <stop offset="50%" stop-color="#7a4e3c"/>
+      <stop offset="100%" stop-color="#d9b57a"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#bg)"/>
+  <path d="M0 820 L760 320 L760 1200 L0 1200 Z" fill="#231611" opacity="0.75"/>
+  <path d="M900 80 L1600 80 L1600 1200 L920 1200 Z" fill="#f3dfb5" opacity="0.16"/>
+  <circle cx="760" cy="550" r="180" fill="#1a0f0b" opacity="0.82"/>
+  <text x="120" y="1080" fill="#fff3d9" font-family="Georgia, serif" font-size="88">Corner Turn</text>
+</svg>

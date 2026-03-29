@@ -1,0 +1,25 @@
+{
+  "slug": "backstage-silhouettes",
+  "title": "Backstage Silhouettes",
+  "category": "people",
+  "description": "Portraits made in the few minutes before a performance, when posture and nerves say more than words.",
+  "coverPhotoId": "silhouette-curtain",
+  "photos": [
+    {
+      "id": "silhouette-curtain",
+      "src": "/photos/people/backstage/silhouette-curtain.svg",
+      "title": "Curtain Line",
+      "alt": "A stylized portrait placeholder showing a figure in silhouette near stage curtains.",
+      "caption": "The room is nearly dark, but the edge light keeps the subject present.",
+      "date": "September 2024"
+    },
+    {
+      "id": "silhouette-hands",
+      "src": "/photos/people/backstage/silhouette-hands.svg",
+      "title": "Hands Before Call",
+      "alt": "A stylized portrait placeholder emphasizing a performer's hands and backstage shadows.",
+      "caption": "The smallest motion often tells the whole story before a person steps on stage.",
+      "date": "September 2024"
+    }
+  ]
+}

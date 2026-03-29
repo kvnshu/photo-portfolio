@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4a6572"/>
+      <stop offset="60%" stop-color="#8ba4b0"/>
+      <stop offset="100%" stop-color="#c5d5dc"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#sky)"/>
+  <ellipse cx="1300" cy="280" rx="180" ry="120" fill="#dce8ed" opacity="0.4"/>
+  <path d="M0 750 Q400 680 800 720 T1600 700 L1600 1200 L0 1200 Z" fill="#2d3436"/>
+  <path d="M0 850 Q300 800 600 840 T1200 820 T1600 860 L1600 1200 L0 1200 Z" fill="#1a1f21"/>
+  <rect x="200" y="500" width="80" height="300" fill="#3d4547" opacity="0.6"/>
+  <rect x="350" y="550" width="60" height="250" fill="#3d4547" opacity="0.5"/>
+  <text x="120" y="1080" fill="#e8f0f3" font-family="Georgia, serif" font-size="88">Iceland Ring Road</text>
+</svg>

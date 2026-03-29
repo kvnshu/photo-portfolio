@@ -1,0 +1,25 @@
+{
+  "slug": "friday-night-lights",
+  "title": "Friday Night Lights",
+  "category": "sports",
+  "description": "A sports set centered on anticipation and collision under harsh stadium lighting.",
+  "coverPhotoId": "lights-kickoff",
+  "photos": [
+    {
+      "id": "lights-kickoff",
+      "src": "/photos/sports/lights/lights-kickoff.svg",
+      "title": "Kickoff Hang Time",
+      "alt": "A stylized sports placeholder showing a football kickoff under stadium lights.",
+      "caption": "The whole field seems to hold still for a split second once the ball leaves the foot.",
+      "date": "November 2024"
+    },
+    {
+      "id": "lights-sideline",
+      "src": "/photos/sports/lights/lights-sideline.svg",
+      "title": "Sideline Surge",
+      "alt": "A stylized sports placeholder of players accelerating along a football sideline at night.",
+      "caption": "The sideline compresses everything into a single channel of motion.",
+      "date": "November 2024"
+    }
+  ]
+}

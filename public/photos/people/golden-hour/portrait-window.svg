@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2d1a12"/>
+      <stop offset="55%" stop-color="#b96a45"/>
+      <stop offset="100%" stop-color="#f0d4a5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#bg)"/>
+  <circle cx="1060" cy="320" r="220" fill="#f6e6bc" opacity="0.45"/>
+  <rect x="280" y="220" width="420" height="700" rx="220" fill="#1d1210" opacity="0.8"/>
+  <rect x="720" y="150" width="240" height="820" rx="18" fill="#f8e8bf" opacity="0.22"/>
+  <text x="120" y="1080" fill="#fff3d9" font-family="Georgia, serif" font-size="88">Golden Hour Portraits</text>
+</svg>
