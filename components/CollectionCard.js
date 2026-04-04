@@ -8,10 +8,7 @@ export default function CollectionCard({ collection }) {
       </div>
 
       <div className="collection-card-overlay">
-        <p className="collection-card-kicker">
-          {collection.categoryLabel}
-          {collection.location ? ` • ${collection.location.label}` : ""}
-        </p>
+        <p className="collection-card-kicker">{collection.categoryLabel}</p>
         <h3>{collection.title}</h3>
       </div>
     </Link>

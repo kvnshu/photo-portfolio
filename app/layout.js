@@ -22,10 +22,7 @@ export default async function RootLayout({ children }) {
           <header className="site-header">
             <Link className="brand" href="/">
               <span className="brand-mark">KX</span>
-              <span>
-                <strong>{site.name}</strong>
-                <small>{site.location}</small>
-              </span>
+              <strong>{site.name}</strong>
             </Link>
 
             <nav className="site-nav" aria-label="Primary">
