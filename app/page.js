@@ -27,7 +27,7 @@ export default async function HomePage() {
               href={card.slug === "travel" ? "/travel" : `/category/${card.slug}`}
               key={card.slug}
             >
-              <img alt={card.name} src={card.src} />
+              <img alt={card.name} loading="lazy" src={card.src} />
               <div className="hero-cover-overlay">
                 <strong>{card.name}</strong>
               </div>

@@ -140,7 +140,7 @@ export default function TravelGlobeExperience({ locations }) {
               <span>Selected</span>
               <h2>{activeLocation.label}</h2>
               {activeLocation.coverPhoto && (
-                <img alt={activeLocation.coverPhoto.alt} src={activeLocation.coverPhoto.src} />
+                <img alt={activeLocation.coverPhoto.alt} loading="lazy" src={activeLocation.coverPhoto.src} />
               )}
               <p className="globe-tip">{activeLocation.photos.length} photos</p>
             </div>

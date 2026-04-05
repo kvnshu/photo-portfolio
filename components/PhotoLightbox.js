@@ -37,7 +37,7 @@ export default function PhotoLightbox({ photos }) {
               onClick={() => setActiveIndex(index)}
               type="button"
             >
-              <img alt={photo.alt} src={photo.src} />
+              <img alt={photo.alt} loading="lazy" src={photo.src} />
             </button>
           ))}
         </div>
@@ -60,7 +60,7 @@ export default function PhotoLightbox({ photos }) {
             </div>
 
             <figure className="modal-figure">
-              <img alt={activePhoto.alt} src={activePhoto.src} />
+              <img alt={activePhoto.alt} loading="eager" src={activePhoto.src} />
             </figure>
 
             <div className="modal-copy">
