@@ -221,7 +221,7 @@ img {
 .hero-cover-card {
   position: relative;
   display: block;
-  min-height: 440px;
+  aspect-ratio: 2 / 3;
   overflow: hidden;
   border-radius: 4px;
   background: #d8cfc2;
@@ -796,7 +796,7 @@ img {
   }
 
   .hero-cover-card {
-    min-height: 300px;
+    aspect-ratio: 2 / 3;
   }
 }
 
@@ -851,7 +851,7 @@ img {
   }
 
   .hero-cover-card {
-    min-height: 220px;
+    aspect-ratio: 2 / 3;
     border-radius: 8px;
   }
 
@@ -913,7 +913,7 @@ img {
   }
 
   .hero-cover-card {
-    min-height: 190px;
+    aspect-ratio: 2 / 3;
   }
 
   .hero-cover-overlay {

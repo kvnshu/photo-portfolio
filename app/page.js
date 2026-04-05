@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { getSiteData } from "../lib/content";
 
 export default async function HomePage() {
@@ -28,17 +27,7 @@ export default async function HomePage() {
               href={card.slug === "travel" ? "/travel" : `/category/${card.slug}`}
               key={card.slug}
             >
-              <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                <Image
-                  alt={card.name}
-                  src={card.src}
-                  fill
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  style={{ objectFit: 'cover' }}
-                  quality={85}
-                  priority
-                />
-              </div>
+              <img alt={card.name} src={card.src} />
               <div className="hero-cover-overlay">
                 <strong>{card.name}</strong>
               </div>

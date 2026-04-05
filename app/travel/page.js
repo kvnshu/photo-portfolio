@@ -13,10 +13,10 @@ export default async function TravelPage() {
       <section className="page-intro">
         <p className="eyebrow">Interactive View</p>
         <h1>Travel</h1>
-        <p className="lede">
+        {/* <p className="lede">
           Explore travel photos by location. Add folders to public/photos/travel/ and configure
           coordinates in content/travel-locations.json.
-        </p>
+        </p> */}
       </section>
 
       <TravelGlobeExperience locations={locations} />

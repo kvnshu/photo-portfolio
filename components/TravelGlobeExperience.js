@@ -1,7 +1,6 @@
 "use client";
 import maplibregl from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import PhotoLightbox from "./PhotoLightbox";
 
 const MONOCHROME_STYLE = {
@@ -141,16 +140,7 @@ export default function TravelGlobeExperience({ locations }) {
               <span>Selected</span>
               <h2>{activeLocation.label}</h2>
               {activeLocation.coverPhoto && (
-                <div style={{ position: 'relative', width: '100%', aspectRatio: '3/2' }}>
-                  <Image
-                    alt={activeLocation.coverPhoto.alt}
-                    src={activeLocation.coverPhoto.src}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 400px"
-                    style={{ objectFit: 'cover' }}
-                    quality={85}
-                  />
-                </div>
+                <img alt={activeLocation.coverPhoto.alt} src={activeLocation.coverPhoto.src} />
               )}
               <p className="globe-tip">{activeLocation.photos.length} photos</p>
             </div>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 
 export default function PhotoLightbox({ photos }) {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -38,16 +37,7 @@ export default function PhotoLightbox({ photos }) {
               onClick={() => setActiveIndex(index)}
               type="button"
             >
-              <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                <Image
-                  alt={photo.alt}
-                  src={photo.src}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  style={{ objectFit: 'cover' }}
-                  quality={85}
-                />
-              </div>
+              <img alt={photo.alt} src={photo.src} />
             </button>
           ))}
         </div>
@@ -69,16 +59,8 @@ export default function PhotoLightbox({ photos }) {
               </button>
             </div>
 
-            <figure className="modal-figure" style={{ position: 'relative', width: '100%', height: '100%' }}>
-              <Image
-                alt={activePhoto.alt}
-                src={activePhoto.src}
-                fill
-                sizes="100vw"
-                style={{ objectFit: 'contain' }}
-                quality={90}
-                priority
-              />
+            <figure className="modal-figure">
+              <img alt={activePhoto.alt} src={activePhoto.src} />
             </figure>
 
             <div className="modal-copy">
