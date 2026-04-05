@@ -1,56 +1,41 @@
 "use client";
-import Link from "next/link";
 import maplibregl from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
+import PhotoLightbox from "./PhotoLightbox";
 
 const MONOCHROME_STYLE = {
   version: 8,
   sources: {
     "carto-light": {
       type: "raster",
-      tiles: [
-        "https://basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"
-      ],
+      tiles: ["https://basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png"],
       tileSize: 256,
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>'
     },
     "carto-labels": {
       type: "raster",
-      tiles: [
-        "https://basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png"
-      ],
+      tiles: ["https://basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}.png"],
       tileSize: 256
     }
   },
   layers: [
-    {
-      id: "base",
-      type: "raster",
-      source: "carto-light"
-    },
-    {
-      id: "labels",
-      type: "raster",
-      source: "carto-labels"
-    }
+    { id: "base", type: "raster", source: "carto-light" },
+    { id: "labels", type: "raster", source: "carto-labels" }
   ]
 };
 
-export default function TravelGlobeExperience({ collections }) {
+export default function TravelGlobeExperience({ locations }) {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const markerMapRef = useRef(new Map());
   const hasAutoFitRef = useRef(false);
-  const [activeSlug, setActiveSlug] = useState(collections[0]?.slug ?? null);
+  const [activeSlug, setActiveSlug] = useState(locations[0]?.slug ?? null);
 
-  const activeCollection =
-    collections.find((collection) => collection.slug === activeSlug) ?? collections[0] ?? null;
+  const activeLocation = locations.find((loc) => loc.slug === activeSlug) ?? locations[0] ?? null;
 
   useEffect(() => {
-    if (!mapContainerRef.current || mapRef.current) {
-      return;
-    }
+    if (!mapContainerRef.current || mapRef.current) return;
 
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
@@ -68,23 +53,23 @@ export default function TravelGlobeExperience({ collections }) {
     map.touchZoomRotate.disableRotation();
     map.dragRotate.disable();
 
-    collections.forEach((collection) => {
+    locations.forEach((location) => {
       const element = document.createElement("button");
       element.className = "maplibre-pin";
       element.type = "button";
-      element.setAttribute("aria-label", `Open ${collection.title}`);
-      element.addEventListener("click", () => setActiveSlug(collection.slug));
+      element.setAttribute("aria-label", `Open ${location.label}`);
+      element.addEventListener("click", () => setActiveSlug(location.slug));
 
       const marker = new maplibregl.Marker({ element, anchor: "bottom" })
-        .setLngLat([collection.location.longitude, collection.location.latitude])
+        .setLngLat([location.lng, location.lat])
         .addTo(map);
 
-      markerMapRef.current.set(collection.slug, { element, marker });
+      markerMapRef.current.set(location.slug, { element, marker });
     });
 
     const bounds = new maplibregl.LngLatBounds();
-    collections.forEach((collection) => {
-      bounds.extend([collection.location.longitude, collection.location.latitude]);
+    locations.forEach((location) => {
+      bounds.extend([location.lng, location.lat]);
     });
 
     map.on("load", () => {
@@ -104,21 +89,29 @@ export default function TravelGlobeExperience({ collections }) {
       map.remove();
       mapRef.current = null;
     };
-  }, [collections]);
+  }, [locations]);
 
   useEffect(() => {
     markerMapRef.current.forEach(({ element }, slug) => {
       element.classList.toggle("active", slug === activeSlug);
     });
 
-    if (activeCollection && mapRef.current && hasAutoFitRef.current) {
+    if (activeLocation && mapRef.current && hasAutoFitRef.current) {
       mapRef.current.easeTo({
-        center: [activeCollection.location.longitude, activeCollection.location.latitude],
+        center: [activeLocation.lng, activeLocation.lat],
         duration: 1200,
         zoom: 2.1
       });
     }
-  }, [activeCollection, activeSlug]);
+  }, [activeLocation, activeSlug]);
+
+  if (locations.length === 0) {
+    return (
+      <section className="globe-shell map-shell">
+        <p className="empty-state">No travel locations configured yet.</p>
+      </section>
+    );
+  }
 
   return (
     <section className="globe-shell map-shell">
@@ -129,36 +122,35 @@ export default function TravelGlobeExperience({ collections }) {
 
         <div>
           <div className="marker-list">
-            {collections.map((collection) => (
+            {locations.map((location) => (
               <button
-                className={collection.slug === activeCollection?.slug ? "active" : ""}
-                key={collection.slug}
-                onClick={() => setActiveSlug(collection.slug)}
+                className={location.slug === activeLocation?.slug ? "active" : ""}
+                key={location.slug}
+                onClick={() => setActiveSlug(location.slug)}
                 type="button"
               >
-                <span>{collection.location.label}</span>
-                <h3>{collection.title}</h3>
-                <p>{collection.description}</p>
+                <span>{location.label}</span>
+                <p>{location.photos.length} photos</p>
               </button>
             ))}
           </div>
 
-          {activeCollection ? (
+          {activeLocation ? (
             <div className="detail-panel">
-              <span>Selected collection</span>
-              <h2>{activeCollection.title}</h2>
-              <p>{activeCollection.description}</p>
-              <img alt={activeCollection.coverPhoto.alt} src={activeCollection.coverPhoto.src} />
-              <p className="globe-tip">
-                {activeCollection.location.label} • {activeCollection.photos.length} photos
-              </p>
-              <Link className="button-primary" href={`/collections/${activeCollection.slug}`}>
-                Open collection
-              </Link>
+              <span>Selected</span>
+              <h2>{activeLocation.label}</h2>
+              {activeLocation.coverPhoto && (
+                <img alt={activeLocation.coverPhoto.alt} src={activeLocation.coverPhoto.src} />
+              )}
+              <p className="globe-tip">{activeLocation.photos.length} photos</p>
             </div>
           ) : null}
         </div>
       </div>
+
+      {activeLocation && activeLocation.photos.length > 0 && (
+        <PhotoLightbox photos={activeLocation.photos} />
+      )}
     </section>
   );
 }

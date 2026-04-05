@@ -2,42 +2,38 @@
 
 import { useEffect, useState } from "react";
 
-export default function PhotoLightbox({ collection }) {
+export default function PhotoLightbox({ photos }) {
   const [activeIndex, setActiveIndex] = useState(null);
 
   useEffect(() => {
     function onKeyDown(event) {
-      if (activeIndex === null) {
-        return;
-      }
+      if (activeIndex === null) return;
 
       if (event.key === "Escape") {
         setActiveIndex(null);
       }
-
       if (event.key === "ArrowRight") {
-        setActiveIndex((current) => (current + 1) % collection.photos.length);
+        setActiveIndex((current) => (current + 1) % photos.length);
       }
-
       if (event.key === "ArrowLeft") {
-        setActiveIndex((current) => (current - 1 + collection.photos.length) % collection.photos.length);
+        setActiveIndex((current) => (current - 1 + photos.length) % photos.length);
       }
     }
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [activeIndex, collection.photos.length]);
+  }, [activeIndex, photos.length]);
 
-  const activePhoto = activeIndex === null ? null : collection.photos[activeIndex];
+  const activePhoto = activeIndex === null ? null : photos[activeIndex];
 
   return (
     <>
       <section className="photo-strip">
         <div className="photo-grid minimal-photo-grid">
-          {collection.photos.map((photo, index) => (
+          {photos.map((photo, index) => (
             <button
               className="photo-card"
-              key={photo.id}
+              key={photo.src}
               onClick={() => setActiveIndex(index)}
               type="button"
             >
@@ -56,7 +52,7 @@ export default function PhotoLightbox({ collection }) {
         >
           <div className="modal-panel" onClick={(event) => event.stopPropagation()}>
             <div className="modal-topbar">
-              <h2>{activePhoto.title}</h2>
+              <span>{activeIndex + 1} / {photos.length}</span>
               <button className="close-button" onClick={() => setActiveIndex(null)} type="button">
                 <span aria-hidden="true">×</span>
                 <span className="sr-only">Close</span>
@@ -71,16 +67,14 @@ export default function PhotoLightbox({ collection }) {
               <div className="modal-actions">
                 <button
                   className="modal-button"
-                  onClick={() =>
-                    setActiveIndex((current) => (current - 1 + collection.photos.length) % collection.photos.length)
-                  }
+                  onClick={() => setActiveIndex((current) => (current - 1 + photos.length) % photos.length)}
                   type="button"
                 >
                   Previous
                 </button>
                 <button
                   className="modal-button"
-                  onClick={() => setActiveIndex((current) => (current + 1) % collection.photos.length)}
+                  onClick={() => setActiveIndex((current) => (current + 1) % photos.length)}
                   type="button"
                 >
                   Next

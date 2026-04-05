@@ -1,24 +1,25 @@
 import Link from "next/link";
-import { getSiteData } from "../lib/content";
+import { getSiteData, getCoverPhotoForCategory } from "../lib/content";
 
 export default async function HomePage() {
-  const { site, categories, collections } = await getSiteData();
-  const heroCards = categories
-    .map((category) => {
-      const coverCollection = collections.find((collection) => collection.category === category.slug);
-      if (!coverCollection) {
-        return null;
-      }
+  const { site, categories } = await getSiteData();
+
+  const heroCards = await Promise.all(
+    categories.map(async (category) => {
+      const coverPhoto = await getCoverPhotoForCategory(category.slug);
+      if (!coverPhoto) return null;
 
       return {
         slug: category.slug,
         name: category.name,
         description: category.description,
-        src: coverCollection.coverPhoto.src,
-        alt: coverCollection.coverPhoto.alt
+        src: coverPhoto.src,
+        alt: coverPhoto.alt
       };
     })
-    .filter(Boolean);
+  );
+
+  const validCards = heroCards.filter(Boolean);
 
   return (
     <div className="page-stack">
@@ -31,7 +32,7 @@ export default async function HomePage() {
         </div>
 
         <div className="hero-cover-grid">
-          {heroCards.map((card) => (
+          {validCards.map((card) => (
             <Link
               className="hero-cover-card"
               href={card.slug === "travel" ? "/travel" : `/category/${card.slug}`}

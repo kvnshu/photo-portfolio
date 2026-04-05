@@ -5,13 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "validate": "node scripts/validate-content.mjs",
-    "add-collection": "node scripts/add-collection.mjs",
-    "add-photo": "node scripts/add-photo.mjs",
-    "remove-photo": "node scripts/remove-photo.mjs",
-    "remove-collection": "node scripts/remove-collection.mjs",
-    "list": "node scripts/list-collections.mjs"
+    "start": "next start"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

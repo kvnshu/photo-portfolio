@@ -1,0 +1,12 @@
+{
+  "iceland": {
+    "label": "Iceland",
+    "lat": 64.1466,
+    "lng": -21.9426
+  },
+  "tokyo": {
+    "label": "Tokyo, Japan",
+    "lat": 35.6764,
+    "lng": 139.65
+  }
+}
