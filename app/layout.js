@@ -18,20 +18,16 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
+        <header className="site-header">
+          <Link className="brand" href="/">KX</Link>
+          <nav className="site-nav" aria-label="Primary">
+            <Link href="/category/people">People</Link>
+            <Link href="/travel">Travel</Link>
+            <Link href="/category/sports">Sports</Link>
+          </nav>
+        </header>
+
         <div className="page-shell">
-          <header className="site-header">
-            <Link className="brand" href="/">
-              <span className="brand-mark">KX</span>
-              <strong>{site.name}</strong>
-            </Link>
-
-            <nav className="site-nav" aria-label="Primary">
-              <Link href="/category/people">People</Link>
-              <Link href="/travel">Travel</Link>
-              <Link href="/category/sports">Sports</Link>
-            </nav>
-          </header>
-
           <main>{children}</main>
 
           {site.footerNote ? (

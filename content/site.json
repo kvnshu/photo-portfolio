@@ -1,23 +1,22 @@
 {
-  "name": "Kevin Xu Photography",
-  "tagline": "Portraits, travel, and sports photography presented through three focused category pages and an interactive travel map.",
+  "name": "Photos by Kevin Xu",
+  "tagline": "photos of people, places, and sports",
   "heroTitle": "Portraits, motion, and far-flung places with room to breathe.",
   "introShort": [
-    "I am Kevin Xu, a photographer focused on people, travel, and sports, with an eye for atmosphere as much as action.",
-    "I like images that feel lived in, whether they come from a portrait session at golden hour, a long road through another country, or a split second on the sideline."
+    "Kevin Xu is a photographer focused on people, travel, and sports, with an eye for atmosphere as much as action."
   ],
   "categories": [
     {
       "slug": "people",
-      "description": "Portrait work that leans into atmosphere, gesture, and the space around a person."
+      "coverPhoto": "/photos/people/portraits/KXU_20230402_PhotoshootBelany_254.jpg"
     },
     {
       "slug": "travel",
-      "description": "Location-based sets that visitors can explore through a dedicated travel page and map view."
+      "coverPhoto": "/photos/travel/alaska/KXU_20220622_AlaskaCruiseTrip_434.jpg"
     },
     {
       "slug": "sports",
-      "description": "Fast, high-energy frames focused on impact, anticipation, and the edge of action."
+      "coverPhoto": "/photos/sports/nnhs/KXU_20200922_NNHSTennisVarsityVsWheatonAcademy_230.jpg"
     }
   ],
   "footerNote": ""

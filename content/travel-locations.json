@@ -1,12 +1,42 @@
 {
-  "iceland": {
-    "label": "Iceland",
-    "lat": 64.1466,
-    "lng": -21.9426
+  "alaska": {
+    "label": "Alaska",
+    "lat": 58.3005,
+    "lng": -134.4201
   },
-  "tokyo": {
-    "label": "Tokyo, Japan",
-    "lat": 35.6764,
-    "lng": 139.65
+  "portugal": {
+    "label": "Portugal",
+    "lat": 39.3999,
+    "lng": -8.2245
+  },
+  "morocco": {
+    "label": "Morocco",
+    "lat": 31.7917,
+    "lng": -7.0926
+  },
+  "red rocks canyon": {
+    "label": "Red Rocks Canyon, NV",
+    "lat": 36.0986,
+    "lng": -115.4273
+  },
+  "norcal": {
+    "label": "Northern California",
+    "lat": 39.8283,
+    "lng": -98.5795
+  },
+  "olympic": {
+    "label": "Olympic National Park, WA",
+    "lat": 47.8021,
+    "lng": -123.6044
+  },
+  "moab": {
+    "label": "Moab, Utah",
+    "lat": 38.5733,
+    "lng": -109.5498
+  },
+  "crater lake": {
+    "label": "Crater Lake National Park, OR",
+    "lat": 42.9446,
+    "lng": -122.1090
   }
 }

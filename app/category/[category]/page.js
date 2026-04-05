@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
-import { getCategoryBySlug, getPhotosForCategoryPage, getSiteData } from "../../../lib/content";
-import PhotoLightbox from "../../../components/PhotoLightbox";
+import { getCategoryBySlug, getCollectionsForCategoryPage, getSiteData } from "../../../lib/content";
+import CategoryGallery from "../../../components/CategoryGallery";
 
 export async function generateStaticParams() {
   const { categories } = await getSiteData();
@@ -26,21 +26,12 @@ export default async function CategoryPage({ params }) {
     notFound();
   }
 
-  const photos = await getPhotosForCategoryPage(category);
+  const collections = await getCollectionsForCategoryPage(category);
 
   return (
     <div className="page-stack">
-      <section className="page-intro">
-        <p className="eyebrow">{categoryData.shortLabel}</p>
-        <h1>{categoryData.name}</h1>
-        {categoryData.description && <p className="lede">{categoryData.description}</p>}
-      </section>
-
-      {photos && photos.length > 0 ? (
-        <PhotoLightbox photos={photos} />
-      ) : (
-        <p className="empty-state">No photos yet.</p>
-      )}
+      <h1 className="category-header">{categoryData.name}</h1>
+      <CategoryGallery collections={collections || []} />
     </div>
   );
 }
