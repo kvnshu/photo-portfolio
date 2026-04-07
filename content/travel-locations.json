@@ -4,15 +4,15 @@
     "lat": 58.3005,
     "lng": -134.4201
   },
-  "portugal": {
-    "label": "Portugal",
-    "lat": 39.3999,
-    "lng": -8.2245
-  },
   "morocco": {
     "label": "Morocco",
     "lat": 31.7917,
     "lng": -7.0926
+  },
+  "portugal": {
+    "label": "Portugal",
+    "lat": 39.3999,
+    "lng": -8.2245
   },
   "red rocks canyon": {
     "label": "Red Rocks Canyon, NV",
