@@ -25,11 +25,11 @@ const MONOCHROME_STYLE = {
   ]
 };
 
-export default function TravelGlobeExperience({ locations }) {
+export default function TravelGlobeExperience({ locations, title }) {
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
   const markerMapRef = useRef(new Map());
-  const hasAutoFitRef = useRef(false);
+  const popupRef = useRef(null);
   const [activeSlug, setActiveSlug] = useState(locations[0]?.slug ?? null);
 
   const activeLocation = locations.find((loc) => loc.slug === activeSlug) ?? locations[0] ?? null;
@@ -40,50 +40,60 @@ export default function TravelGlobeExperience({ locations }) {
     const map = new maplibregl.Map({
       container: mapContainerRef.current,
       style: MONOCHROME_STYLE,
-      center: [20, 24],
-      zoom: 1.15,
+      center: [0, 20],
+      zoom: 1.0,
       attributionControl: true,
-      dragRotate: false,
-      pitchWithRotate: false
+      interactive: false
     });
 
     mapRef.current = map;
-    map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right");
-    map.scrollZoom.enable();
-    map.touchZoomRotate.disableRotation();
-    map.dragRotate.disable();
+
+    const popup = new maplibregl.Popup({
+      closeButton: false,
+      closeOnClick: false,
+      offset: 15,
+      className: "map-hover-popup"
+    });
+    popupRef.current = popup;
 
     locations.forEach((location) => {
       const element = document.createElement("button");
       element.className = "maplibre-pin";
       element.type = "button";
-      element.setAttribute("aria-label", `Open ${location.label}`);
+      element.setAttribute("aria-label", `View ${location.label}`);
       element.addEventListener("click", () => setActiveSlug(location.slug));
 
-      const marker = new maplibregl.Marker({ element, anchor: "bottom" })
+      element.addEventListener("mouseenter", () => {
+        const coverPhoto = location.coverPhoto || location.photos[0];
+        const popupContent = `
+          <div class="map-popup-content">
+            ${coverPhoto ? `<img src="${coverPhoto.src}" alt="${coverPhoto.alt}" />` : ""}
+            <span>${location.label}</span>
+          </div>
+        `;
+        popup.setLngLat([location.lng, location.lat]).setHTML(popupContent).addTo(map);
+      });
+
+      element.addEventListener("mouseleave", () => {
+        popup.remove();
+      });
+
+      const marker = new maplibregl.Marker({ element, anchor: "center" })
         .setLngLat([location.lng, location.lat])
         .addTo(map);
 
       markerMapRef.current.set(location.slug, { element, marker });
     });
 
-    const bounds = new maplibregl.LngLatBounds();
-    locations.forEach((location) => {
-      bounds.extend([location.lng, location.lat]);
-    });
-
     map.on("load", () => {
-      if (!bounds.isEmpty()) {
-        map.fitBounds(bounds, {
-          padding: { top: 56, right: 56, bottom: 56, left: 56 },
-          maxZoom: 2.25,
-          duration: 0
-        });
-        hasAutoFitRef.current = true;
-      }
+      map.fitBounds(
+        [[-170, -60], [180, 75]],
+        { padding: { top: 60, right: 20, bottom: 20, left: 20 }, duration: 0 }
+      );
     });
 
     return () => {
+      popup.remove();
       markerMapRef.current.forEach(({ marker }) => marker.remove());
       markerMapRef.current.clear();
       map.remove();
@@ -95,15 +105,7 @@ export default function TravelGlobeExperience({ locations }) {
     markerMapRef.current.forEach(({ element }, slug) => {
       element.classList.toggle("active", slug === activeSlug);
     });
-
-    if (activeLocation && mapRef.current && hasAutoFitRef.current) {
-      mapRef.current.easeTo({
-        center: [activeLocation.lng, activeLocation.lat],
-        duration: 1200,
-        zoom: 2.1
-      });
-    }
-  }, [activeLocation, activeSlug]);
+  }, [activeSlug]);
 
   if (locations.length === 0) {
     return (
@@ -115,37 +117,29 @@ export default function TravelGlobeExperience({ locations }) {
 
   return (
     <section className="globe-shell map-shell">
-      <div className="globe-layout map-layout">
-        <div className="travel-map-frame">
-          <div className="travel-map-surface" ref={mapContainerRef} />
-        </div>
+      <div className="travel-map-frame full-width">
+        <div className="travel-map-surface" ref={mapContainerRef} />
+        {title && <h1 className="travel-map-title">{title}</h1>}
+      </div>
 
-        <div>
-          <div className="marker-list">
-            {locations.map((location) => (
-              <button
-                className={location.slug === activeLocation?.slug ? "active" : ""}
-                key={location.slug}
-                onClick={() => setActiveSlug(location.slug)}
-                type="button"
-              >
-                <span>{location.label}</span>
-                <p>{location.photos.length} photos</p>
-              </button>
-            ))}
-          </div>
-
-          {activeLocation ? (
-            <div className="detail-panel">
-              <span>Selected</span>
-              <h2>{activeLocation.label}</h2>
-              {activeLocation.coverPhoto && (
-                <img alt={activeLocation.coverPhoto.alt} loading="lazy" src={activeLocation.coverPhoto.src} />
-              )}
-              <p className="globe-tip">{activeLocation.photos.length} photos</p>
-            </div>
-          ) : null}
-        </div>
+      <div className="collection-tiles">
+        {locations.map((location) => (
+          <button
+            className={`collection-tile ${location.slug === activeSlug ? "active" : ""}`}
+            key={location.slug}
+            onClick={() => setActiveSlug(location.slug)}
+            type="button"
+          >
+            {(location.coverPhoto || location.photos[0]) && (
+              <img
+                alt={(location.coverPhoto || location.photos[0]).alt}
+                loading="lazy"
+                src={(location.coverPhoto || location.photos[0]).src}
+              />
+            )}
+            <span>{location.label}</span>
+          </button>
+        ))}
       </div>
 
       {activeLocation && activeLocation.photos.length > 0 && (

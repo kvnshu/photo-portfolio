@@ -4,10 +4,7 @@ import sharp from "sharp";
 
 const PHOTOS_DIR = "public/photos";
 const BACKUP_DIR = "public/photos-original";
-const MAX_WIDTH = 2400;
-const MAX_HEIGHT = 2400;
-const JPEG_QUALITY = 80;
-const PNG_QUALITY = 80;
+const SITE_JSON = "content/site.json";
 
 const IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png"];
 
@@ -38,11 +35,10 @@ function formatBytes(bytes) {
   return (bytes / (1024 * 1024)).toFixed(2) + " MB";
 }
 
-async function compressImage(imagePath) {
-  const ext = path.extname(imagePath).toLowerCase();
+async function convertToWebP(imagePath) {
   const originalSize = await getFileSize(imagePath);
 
-  // Create backup path
+  // Create backup path (keep original extension in backup)
   const relativePath = path.relative(PHOTOS_DIR, imagePath);
   const backupPath = path.join(BACKUP_DIR, relativePath);
   await fs.mkdir(path.dirname(backupPath), { recursive: true });
@@ -50,40 +46,27 @@ async function compressImage(imagePath) {
   // Copy original to backup
   await fs.copyFile(imagePath, backupPath);
 
-  // Process image
-  let pipeline = sharp(imagePath).rotate(); // Auto-rotate based on EXIF
+  // Convert to lossless WebP
+  const webpPath = imagePath.replace(/\.(jpg|jpeg|png)$/i, ".webp");
 
-  // Resize if larger than max dimensions
-  const metadata = await sharp(imagePath).metadata();
-  if (metadata.width > MAX_WIDTH || metadata.height > MAX_HEIGHT) {
-    pipeline = pipeline.resize(MAX_WIDTH, MAX_HEIGHT, {
-      fit: "inside",
-      withoutEnlargement: true
-    });
-  }
+  await sharp(imagePath)
+    .rotate() // Auto-rotate based on EXIF
+    .webp({ lossless: true })
+    .toFile(webpPath);
 
-  // Compress based on format
-  if (ext === ".png") {
-    pipeline = pipeline.png({ quality: PNG_QUALITY, compressionLevel: 9 });
-  } else {
-    pipeline = pipeline.jpeg({ quality: JPEG_QUALITY, mozjpeg: true });
-  }
+  // Remove original file
+  await fs.unlink(imagePath);
 
-  // Write to temp file then replace original
-  const tempPath = imagePath + ".tmp";
-  await pipeline.toFile(tempPath);
-  await fs.rename(tempPath, imagePath);
-
-  const newSize = await getFileSize(imagePath);
+  const newSize = await getFileSize(webpPath);
   const savings = originalSize - newSize;
   const percent = ((savings / originalSize) * 100).toFixed(1);
 
-  return { originalSize, newSize, savings, percent };
+  return { originalSize, newSize, savings, percent, webpPath };
 }
 
 async function main() {
-  console.log("🖼️  Image Compression Script");
-  console.log("============================\n");
+  console.log("🖼️  Lossless WebP Conversion Script");
+  console.log("====================================\n");
 
   // Check if photos directory exists
   try {
@@ -95,7 +78,7 @@ async function main() {
 
   // Get all images
   const images = await getAllImages(PHOTOS_DIR);
-  console.log(`Found ${images.length} images to compress\n`);
+  console.log(`Found ${images.length} images to convert\n`);
 
   if (images.length === 0) {
     console.log("No images found.");
@@ -108,6 +91,7 @@ async function main() {
 
   let totalOriginal = 0;
   let totalNew = 0;
+  const convertedFiles = [];
 
   for (let i = 0; i < images.length; i++) {
     const imagePath = images[i];
@@ -116,9 +100,13 @@ async function main() {
     process.stdout.write(`[${i + 1}/${images.length}] ${relativePath}... `);
 
     try {
-      const result = await compressImage(imagePath);
+      const result = await convertToWebP(imagePath);
       totalOriginal += result.originalSize;
       totalNew += result.newSize;
+      convertedFiles.push({
+        original: relativePath,
+        webp: path.relative(PHOTOS_DIR, result.webpPath)
+      });
 
       console.log(
         `${formatBytes(result.originalSize)} → ${formatBytes(result.newSize)} (-${result.percent}%)`
@@ -131,12 +119,23 @@ async function main() {
   const totalSavings = totalOriginal - totalNew;
   const totalPercent = ((totalSavings / totalOriginal) * 100).toFixed(1);
 
-  console.log("\n============================");
+  console.log("\n====================================");
   console.log("Summary:");
   console.log(`  Original: ${formatBytes(totalOriginal)}`);
-  console.log(`  Compressed: ${formatBytes(totalNew)}`);
+  console.log(`  Converted: ${formatBytes(totalNew)}`);
   console.log(`  Saved: ${formatBytes(totalSavings)} (${totalPercent}%)`);
+  console.log(`  Format: Lossless WebP (no quality loss)`);
   console.log(`\nOriginals backed up to: ${BACKUP_DIR}/`);
+
+  // Update site.json references
+  try {
+    const siteContent = await fs.readFile(SITE_JSON, "utf8");
+    const updatedContent = siteContent.replace(/\.(jpg|jpeg|png)"/gi, '.webp"');
+    await fs.writeFile(SITE_JSON, updatedContent);
+    console.log(`\nUpdated image references in ${SITE_JSON}`);
+  } catch (error) {
+    console.log(`\nNote: Could not update ${SITE_JSON}: ${error.message}`);
+  }
 }
 
 main().catch(console.error);
