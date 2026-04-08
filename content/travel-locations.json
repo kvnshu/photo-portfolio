@@ -1,42 +1,62 @@
 {
   "alaska": {
-    "label": "Alaska",
+    "label": "Alaska, USA",
     "lat": 58.3005,
-    "lng": -134.4201
+    "lng": -134.4201,
+    "coverPhoto": ""
   },
   "morocco": {
     "label": "Morocco",
     "lat": 31.7917,
-    "lng": -7.0926
+    "lng": -7.0926,
+    "coverPhoto": "KXU_20251220_Morocco_277.jpg"
   },
   "portugal": {
     "label": "Portugal",
     "lat": 39.3999,
-    "lng": -8.2245
+    "lng": -8.2245,
+    "coverPhoto": "KXU_20260302_Portugal_274.jpg"
   },
-  "red rocks canyon": {
+  "rrc": {
     "label": "Red Rocks Canyon, NV",
     "lat": 36.0986,
-    "lng": -115.4273
+    "lng": -115.4273,
+    "coverPhoto": "KXU_20240227_MCCRedRockCanyon_003.jpg"
   },
-  "norcal": {
-    "label": "Northern California",
-    "lat": 39.8283,
-    "lng": -98.5795
+  "moab": {
+    "label": "Moab, UT",
+    "lat": 38.5733,
+    "lng": -109.5498,
+    "coverPhoto": "KXU_20250120_Moab_239.jpg"
+  },
+  "ireland": {
+    "label": "Ireland",
+    "lat": 53.1424,
+    "lng": -7.6921,
+    "coverPhoto": ""
+  },
+  "jackson": {
+    "label": "Jackson Hole, WY",
+    "lat": 43.4799,
+    "lng": -110.7624,
+    "coverPhoto": "KXU_20230721_CampDavis_018.jpg"
+  },
+  "sf": {
+    "label": "San Francisco, CA",
+    "lat": 37.7749,
+    "lng": -122.4194,
+    "coverPhoto": "KXU_20240608_SF_124.jpg"
+  },
+  "yosemite": {
+    "label": "Yosemite National Park, CA",
+    "lat": 37.8651,
+    "lng": -119.5383,
+    "coverPhoto": ""
   },
   "olympic": {
     "label": "Olympic National Park, WA",
     "lat": 47.8021,
-    "lng": -123.6044
-  },
-  "moab": {
-    "label": "Moab, Utah",
-    "lat": 38.5733,
-    "lng": -109.5498
-  },
-  "crater lake": {
-    "label": "Crater Lake National Park, OR",
-    "lat": 42.9446,
-    "lng": -122.1090
+    "lng": -123.6044,
+    "coverPhoto": ""
   }
 }

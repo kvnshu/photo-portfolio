@@ -1,9 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 export default function PhotoLightbox({ photos }) {
   const [activeIndex, setActiveIndex] = useState(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     function onKeyDown(event) {
@@ -26,6 +32,48 @@ export default function PhotoLightbox({ photos }) {
 
   const activePhoto = activeIndex === null ? null : photos[activeIndex];
 
+  const modal = activePhoto ? (
+    <div
+      aria-modal="true"
+      className="modal-backdrop"
+      onClick={() => setActiveIndex(null)}
+      role="dialog"
+    >
+      <div className="modal-panel" onClick={(event) => event.stopPropagation()}>
+        <div className="modal-topbar">
+          <span>{activeIndex + 1} / {photos.length}</span>
+          <button className="close-button" onClick={() => setActiveIndex(null)} type="button">
+            <span aria-hidden="true">×</span>
+            <span className="sr-only">Close</span>
+          </button>
+        </div>
+
+        <figure className="modal-figure">
+          <img alt={activePhoto.alt} loading="eager" src={activePhoto.src} />
+        </figure>
+
+        <div className="modal-copy">
+          <div className="modal-actions">
+            <button
+              className="modal-button"
+              onClick={() => setActiveIndex((current) => (current - 1 + photos.length) % photos.length)}
+              type="button"
+            >
+              Previous
+            </button>
+            <button
+              className="modal-button"
+              onClick={() => setActiveIndex((current) => (current + 1) % photos.length)}
+              type="button"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  ) : null;
+
   return (
     <>
       <section className="photo-strip">
@@ -43,47 +91,7 @@ export default function PhotoLightbox({ photos }) {
         </div>
       </section>
 
-      {activePhoto ? (
-        <div
-          aria-modal="true"
-          className="modal-backdrop"
-          onClick={() => setActiveIndex(null)}
-          role="dialog"
-        >
-          <div className="modal-panel" onClick={(event) => event.stopPropagation()}>
-            <div className="modal-topbar">
-              <span>{activeIndex + 1} / {photos.length}</span>
-              <button className="close-button" onClick={() => setActiveIndex(null)} type="button">
-                <span aria-hidden="true">×</span>
-                <span className="sr-only">Close</span>
-              </button>
-            </div>
-
-            <figure className="modal-figure">
-              <img alt={activePhoto.alt} loading="eager" src={activePhoto.src} />
-            </figure>
-
-            <div className="modal-copy">
-              <div className="modal-actions">
-                <button
-                  className="modal-button"
-                  onClick={() => setActiveIndex((current) => (current - 1 + photos.length) % photos.length)}
-                  type="button"
-                >
-                  Previous
-                </button>
-                <button
-                  className="modal-button"
-                  onClick={() => setActiveIndex((current) => (current + 1) % photos.length)}
-                  type="button"
-                >
-                  Next
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
+      {mounted && modal && createPortal(modal, document.body)}
     </>
   );
 }
