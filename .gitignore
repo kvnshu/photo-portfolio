@@ -4,4 +4,4 @@ node_modules
 __pycache__
 .vercel
 out
-public/photos-original*.psd
+.env
