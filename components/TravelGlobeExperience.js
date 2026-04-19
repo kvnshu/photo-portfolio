@@ -1,7 +1,29 @@
 "use client";
 import maplibregl from "maplibre-gl";
-import { useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import PhotoLightbox from "./PhotoLightbox";
+
+const CollectionTile = memo(function CollectionTile({ location, isActive, onClick }) {
+  const coverPhoto = location.coverPhoto || location.photos[0];
+
+  return (
+    <button
+      className={`collection-tile ${isActive ? "active" : ""}`}
+      onClick={onClick}
+      type="button"
+    >
+      {coverPhoto && (
+        <img
+          alt={coverPhoto.alt}
+          decoding="async"
+          loading="lazy"
+          src={coverPhoto.thumb || coverPhoto.src}
+        />
+      )}
+      <span>{location.label}</span>
+    </button>
+  );
+});
 
 const MONOCHROME_STYLE = {
   version: 8,
@@ -31,8 +53,6 @@ export default function TravelGlobeExperience({ locations, title }) {
   const markerMapRef = useRef(new Map());
   const popupRef = useRef(null);
   const [activeSlug, setActiveSlug] = useState(locations[0]?.slug ?? null);
-
-  const activeLocation = locations.find((loc) => loc.slug === activeSlug) ?? locations[0] ?? null;
 
   useEffect(() => {
     if (!mapContainerRef.current || mapRef.current) return;
@@ -124,27 +144,25 @@ export default function TravelGlobeExperience({ locations, title }) {
 
       <div className="collection-tiles">
         {locations.map((location) => (
-          <button
-            className={`collection-tile ${location.slug === activeSlug ? "active" : ""}`}
+          <CollectionTile
+            isActive={location.slug === activeSlug}
             key={location.slug}
+            location={location}
             onClick={() => setActiveSlug(location.slug)}
-            type="button"
-          >
-            {(location.coverPhoto || location.photos[0]) && (
-              <img
-                alt={(location.coverPhoto || location.photos[0]).alt}
-                loading="lazy"
-                src={(location.coverPhoto || location.photos[0]).src}
-              />
-            )}
-            <span>{location.label}</span>
-          </button>
+          />
         ))}
       </div>
 
-      {activeLocation && activeLocation.photos.length > 0 && (
-        <PhotoLightbox photos={activeLocation.photos} />
-      )}
+      {locations.map((location) => (
+        location.photos.length > 0 && (
+          <div
+            key={location.slug}
+            style={{ display: location.slug === activeSlug ? "block" : "none" }}
+          >
+            <PhotoLightbox photos={location.photos} />
+          </div>
+        )
+      ))}
     </section>
   );
 }

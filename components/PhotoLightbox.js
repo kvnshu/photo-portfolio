@@ -1,9 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export default function PhotoLightbox({ photos }) {
+const PhotoCard = memo(function PhotoCard({ photo, index, onClick }) {
+  return (
+    <button
+      className="photo-card"
+      onClick={() => onClick(index)}
+      type="button"
+    >
+      <img
+        alt={photo.alt}
+        decoding="async"
+        loading="lazy"
+        src={photo.thumb || photo.src}
+      />
+    </button>
+  );
+});
+
+function PhotoLightbox({ photos }) {
   const [activeIndex, setActiveIndex] = useState(null);
   const [mounted, setMounted] = useState(false);
 
@@ -29,6 +46,10 @@ export default function PhotoLightbox({ photos }) {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [activeIndex, photos.length]);
+
+  const handleCardClick = useCallback((index) => {
+    setActiveIndex(index);
+  }, []);
 
   const activePhoto = activeIndex === null ? null : photos[activeIndex];
 
@@ -79,14 +100,12 @@ export default function PhotoLightbox({ photos }) {
       <section className="photo-strip">
         <div className="photo-grid minimal-photo-grid">
           {photos.map((photo, index) => (
-            <button
-              className="photo-card"
+            <PhotoCard
+              index={index}
               key={photo.src}
-              onClick={() => setActiveIndex(index)}
-              type="button"
-            >
-              <img alt={photo.alt} loading="lazy" src={photo.src} />
-            </button>
+              onClick={handleCardClick}
+              photo={photo}
+            />
           ))}
         </div>
       </section>
@@ -95,3 +114,5 @@ export default function PhotoLightbox({ photos }) {
     </>
   );
 }
+
+export default memo(PhotoLightbox);

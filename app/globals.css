@@ -886,12 +886,8 @@ img {
   }
 
   .photo-grid {
-    gap: 12px;
-  }
-
-  .photo-card {
-    min-width: 180px;
-    height: 240px;
+    column-count: 2;
+    column-gap: 12px;
   }
 
   .site-header {
@@ -962,10 +958,6 @@ img {
     border-radius: 8px;
   }
 
-  .photo-card {
-    min-width: 140px;
-    height: 200px;
-  }
 
   .travel-map-surface {
     min-height: 360px;
@@ -1055,10 +1047,6 @@ img {
     gap: 10px;
   }
 
-  .photo-card {
-    min-width: 120px;
-    height: 160px;
-  }
 
   .site-nav a {
     min-height: 36px;

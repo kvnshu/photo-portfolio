@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "compress-images": "node scripts/compress-images.js"
+    "compress-images": "node scripts/compress-images.js",
+    "generate-thumbnails": "node scripts/generate-thumbnails.js"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",
